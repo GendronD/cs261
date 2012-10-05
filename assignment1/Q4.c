@@ -1,6 +1,6 @@
 /* CS261- Assignment 1 - Q.4*/
 /* Name: Jordan Bayles
- * Date:
+ * Date: Fri Oct  5 15:51:15 PDT 2012
  * Solution description: Students are allocated, filled,
    and then sorted through the use of a heap sort, similar
    to previous question Q3.

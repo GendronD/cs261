@@ -1,6 +1,6 @@
 /* CS261- Assignment 1 - Q.5*/
 /* Name: Jordan Bayles
- * Date:
+ * Date: Fri Oct  5 15:51:26 PDT 2012
  * Solution description: A toggle is used to determine
    if the current char *should* be upper or lower case,
    its current case is evaluated and then, if it differs

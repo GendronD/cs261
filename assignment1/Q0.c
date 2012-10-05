@@ -1,6 +1,6 @@
 /* CS261- Assignment 1 - Q. 0*/
 /* Name: Jordan Bayles
- * Date:
+ * Date: Fri Oct  5 15:50:26 PDT 2012
  * Solution description: The values of an integer variable's address and contents
  * are shown using the "printf" function with void (%p) and integer (%d) print
  * formats with combinations of * (dereference) and & (address of) operators.

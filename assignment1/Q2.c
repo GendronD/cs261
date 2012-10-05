@@ -1,6 +1,6 @@
 /* CS261- Assignment 1 - Q.2*/
 /* Name: Jordan Bayles
- * Date:
+ * Date: Fri Oct  5 15:50:50 PDT 2012
  * Solution description: Integer variables x, y, and z are
    created and their values modified, pointers explored.
  */

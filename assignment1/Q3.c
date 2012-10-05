@@ -1,6 +1,6 @@
 /* CS261- Assignment 1 - Q.3*/
 /* Name: Jordan Bayles
- * Date:
+ * Date: Fri Oct  5 15:50:59 PDT 2012
  * Solution description: After previous experience with
    sorting algorithms, I decided to try a heap sort due
    to (1) the fact it can be used in place on an array,
