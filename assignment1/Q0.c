@@ -9,9 +9,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+   Function: fooA takes a pointer to an integer and prints related information.
+   Pre-cond: As the pointer is dereferenced, it should be passed in as a pointer
+             to an already allocated section of memory, otherwise a null pointer
+             dereference error will occur.
+   Pst-cond: no modification is done to any variables. Information is sent
+             through stdout to the terminal.
+*/
 void fooA(int* iptr)
 {
-
     /*Print the value pointed to by iptr*/
     printf( "%d\n", *iptr );
 
@@ -22,9 +29,14 @@ void fooA(int* iptr)
     printf( "%p\n", &iptr );
 }
 
+/*
+   Function: Main instantiates an integer variable, prints its address and value,
+             and calls a helper function fooA.
+   Pre-cond: None.
+   Pst-cond: Nothing modified. Information sent through stdout to terminal.
+*/
 int main()
 {
-
     /*declare an integer x*/
     int x;
 

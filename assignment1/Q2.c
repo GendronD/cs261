@@ -1,14 +1,23 @@
 /* CS261- Assignment 1 - Q.2*/
 /* Name: Jordan Bayles
  * Date:
- * Solution description:
+ * Solution description: Integer variables x, y, and z are
+   created and their values modified, pointers explored.
  */
- 
+
 #include <stdio.h>
 #include <stdlib.h>
 
-int foo(int* a, int* b, int c){
-
+/*
+   Function: foo() takes one int and two int pointers and
+             changes their values. Note that the values
+             in the calling function are changed for a,b
+             but not for c as it is not passed by ref.
+   Pre-cond: int *a, *b MUST be previously allocated.
+   Pst-cond: values of a, b are modified, and local copy of c value.
+*/
+int foo(int* a, int* b, int c)
+{
     /*Set a to double its original value*/
     *a *= 2;
 
@@ -22,7 +31,14 @@ int foo(int* a, int* b, int c){
     return( c );
 }
 
-int main(){
+/*
+   Function: main() declares three integers, calls foo(), and prints values before
+             and after modification by foo.
+   Pre-cond: none.
+   Pst-cond: none.
+*/
+int main()
+{
     /*Declare three integers x,y and z and initialize them to 5, 6, 7 respectively*/
     int x = 5;
     int y = 6;
