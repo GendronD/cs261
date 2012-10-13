@@ -5,6 +5,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "dynamicArray.h"
 
 struct DynArr
@@ -365,4 +366,45 @@ void removeDynArr(DynArr *v, TYPE val)
             removeAtDynArr( v, i );
             }
         }
+}
+
+int main( int argc, char **argv )
+{
+    DynArr *test = createDynArr( 4 );
+
+    /* Dynamic array function tests */
+    printf( "size: %d\n", sizeDynArr( test ) );
+    addDynArr( test, 88 );
+    putDynArr( test, 0, 66 );
+    printf( "Added element(pos0): %c\n", getDynArr( test, 0 ) );
+    addDynArr( test, 88 );
+    printf( "Added element (pos1): %c\n", getDynArr( test, 1 ) );
+    swapDynArr( test, 0, 1 );
+    printf( "Swapped element (pos1): %c\n", getDynArr( test, 1 ) );
+    printf( "Swapped element (pos0): %c\n", getDynArr( test, 0 ) );
+    removeAtDynArr( test, 0 );
+    printf( "Deleted element(pos0): %c\n", getDynArr( test, 0 ) );
+    printf( "Deleted element(pos1): %c\n", getDynArr( test, 1 ) );
+
+    /* Stack interface function tests */
+    deleteDynArr( test );
+    test = createDynArr( 4 );
+    printf( "Is empty (is empty)? %d\n", isEmptyDynArr( test ) );
+    pushDynArr( test, 44 );
+    printf( "Top is 44? %d\n", topDynArr( test ) );
+    printf( "Is empty (is not empty)? %d\n", isEmptyDynArr( test ) );
+    popDynArr( test );
+    printf( "Is empty after popping (is empty)?: %d\n", isEmptyDynArr( test ) );
+
+    /* Bag Interface function tests */
+    deleteDynArr( test );
+    test = createDynArr( 4 );
+
+    addDynArr( test, 49 );
+    printf( "Contains 49? %d\n", containsDynArr( test, 49 ) );
+    removeDynArr( test, 49 );
+    printf( "Is empty after remove? %d\n", isEmptyDynArr( test ) );
+    // Asserts and should by behavior
+    //printf( "Contains after remove? %d\n", containsDynArr( test, 49 ) );
+
 }
