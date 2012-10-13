@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "dynamicArray.h"
 
+#define DEFAULT_CAPACITY 4;
 
 /****************************************************************
 Using stack to check for unbalanced parentheses.
@@ -31,8 +32,59 @@ char nextChar(char* s)
 */
 int isBalanced(char* s)
 {
-    /* FIXME: You will write this function */
-    return 0;
+    char c;
+    int balanced = 1;
+    DynArr braces = createDynArr( DEFAULT_CAPACITY );
+
+    assert( s != NULL );
+
+    /* Analysis of what it means to be balanced:
+       In the simple case involving only parenthesis, determining if a string
+       is balanced is simple, the number of '(' must match the number of ')'.
+       However, with all three types of brackets the case of "mismatched scopes'
+       needs to be considered. For this function, the following is assumed:
+           ( { } ) : BALANCED
+           { ( } ) : NOT BALANCED, even though the amount of (,{ and ),} balance.
+           ( } { } : NOT BALANCED
+    */
+    while( ( c != '\0' ) && balanced )
+        {
+        switch( c )
+            {
+            /* Push the element we want to find later, not what we have */
+            case '(':
+                pushDynArr( braces, ')' );
+                break;
+            case '{':
+                pushDynArr( braces, '}' );
+                break;
+            case '[':
+                pushDynArr( braces, ']' );
+                break;
+
+                /* Note deliberate fallthrough */
+            case ')':
+            case '}':
+            case ']':
+                /* If the top of the stack doesn't match, by our analysis
+                   above for "balanced" definition, the string is unbalanced */
+                if( topDynArr( braces ) == c )
+                    {
+                    popDynArr( braces );
+                    }
+                else
+                    {
+                    /* Not balanced */
+                    balanced = 0;
+                    }
+                break;
+            default:
+                /* Character is not a special character / bracket */
+                break;
+            }
+        }
+
+    return( balanced );
 }
 
 int main(int argc, char* argv[]){
