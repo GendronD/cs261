@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "dynamicArray.h"
 
-#define DEFAULT_CAPACITY 4;
+#define DEFAULT_CAPACITY 4
 
 /****************************************************************
 Using stack to check for unbalanced parentheses.
@@ -34,9 +34,7 @@ int isBalanced(char* s)
 {
     char c;
     int balanced = 1;
-    DynArr braces = createDynArr( DEFAULT_CAPACITY );
-
-    assert( s != NULL );
+    DynArr *braces = createDynArr( DEFAULT_CAPACITY );
 
     /* Analysis of what it means to be balanced:
        In the simple case involving only parenthesis, determining if a string
@@ -47,8 +45,9 @@ int isBalanced(char* s)
            { ( } ) : NOT BALANCED, even though the amount of (,{ and ),} balance.
            ( } { } : NOT BALANCED
     */
-    while( ( c != '\0' ) && balanced )
+    do
         {
+        c = nextChar( s );
         switch( c )
             {
             /* Push the element we want to find later, not what we have */
@@ -67,8 +66,10 @@ int isBalanced(char* s)
             case '}':
             case ']':
                 /* If the top of the stack doesn't match, by our analysis
-                   above for "balanced" definition, the string is unbalanced */
-                if( topDynArr( braces ) == c )
+                   above for "balanced" definition, the string is unbalanced.
+                   First check if empty, then check top to make sure its bal */
+                if( !( isEmptyDynArr( braces ) )
+                   &&( topDynArr( braces ) == c ) )
                     {
                     popDynArr( braces );
                     }
@@ -83,7 +84,15 @@ int isBalanced(char* s)
                 break;
             }
         }
+    while( ( c != '\0' ) && balanced );
 
+    /* Stack should now be empty! */
+    if( !isEmptyDynArr( braces ) )
+        {
+        balanced = 0;
+        }
+
+    deleteDynArr( braces );
     return( balanced );
 }
 
@@ -93,13 +102,22 @@ int main(int argc, char* argv[]){
     int res;
 
     printf("Assignment 2\n");
-
-    res = isBalanced(s);
-
-    if (res)
-        printf("The string %s is balanced\n",s);
+    /* Early escape for no input from user. This is done
+       in main because "(null)" contains no characters
+       and thus doesn't have a valid balanced status */
+    if( s == NULL )
+        {
+        printf("No input detected.\n");
+        }
     else
-        printf("The string %s is not balanced\n",s);
+        {
+        res = isBalanced(s);
+
+        if (res)
+            printf("The string %s is balanced\n",s);
+        else
+            printf("The string %s is not balanced\n",s);
+        }
 
     return 0;
 }

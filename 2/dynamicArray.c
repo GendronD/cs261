@@ -118,6 +118,8 @@ void _dynArrSetCapacity(DynArr *v, int newCap)
 */
 int sizeDynArr(DynArr *v)
 {
+    assert( v != NULL );
+
     return v->size;
 }
 
