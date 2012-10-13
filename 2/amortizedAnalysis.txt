@@ -1,0 +1,40 @@
+Jordan Bayles   Sat Oct 13 03:47:07 PDT 2012
+Analysis of dynamic array cost
+
+1. As 32 is relatively small, we can simply add up the cost units:
+Move: 1 2 3 4 5 6 7 8 9 10 1 2 3 4 5 6 7  8 9 20 1 2 3  4 5 6 7 8 9 30 1  2
+Cost: 1 1 1 1 1 1 1 1 9  1 1 1 1 1 1 1 17 1 1 1  1 1 1  1 1 1 1 1 1 1  1  1
+Sum:         8    +   9      +  7  +   17          +   15
+
+The trend here is pretty obvious. Treating the first 8 adds (empty array size 8)
+as our initial case, up to 32 we have sections of cost 8 + 1, 8 - 1, 16 + 1,
+16 - 1. For an arbitrary number of adds of size 2^k, k a positive integer, the
+total cost is 8 + 2*2^3 + 2*2^4 + ... + 2*2^(k-1). In the case of 32 pushes,
+k = 5 and we get total cost 8 + 2*8 + 2*16 = ***56 total cost units***. As the
+number of pushes tends to infinity, the vast majority of pushes will take
+1 cost unit, however the overall big-O complexity is O(n).
+
+2. Adding again:
+Move: 1 2 3 4 5 6 7 8 9 10 1 2  3 4 5  6 7 8  9 20 1  2 3  4  5 6 7  8 9 30 1 2
+Cost: 1 1 1 1 1 1 1 1 9  1 1 12 1 1 15 1 1 18 1 1  21 1 1  24 1 1 27 1 1 30 1 1
+Sum:         8       +9  +2 +12 +2 +15 +2 +18 +2  +21 +2  +24 +2 +27 +2 +30 +2
+
+The total number of cost units, as expected is much higher, with a total of
+180 cost units. However, this method is still O(n) complexity, as the worst
+case for adding remains the same. However, the average push time is much
+closer to O(n) than O(1) as before.
+
+
+3. Due to the fact that highest cost occurs when doubling or shrinking the
+capacity, logically the sequence of push() and pop() operations with the highest
+amount of cost is one with the most doubling / shrinking operations. The sequence
+that best achieves this is most likely oscillating push(), pop(), push(), pop()
+with capacity at a doubling limit, such as N = 16, 32 or another multiple of two.
+In this instance it will results in O(N^2) total cost. The way to get around
+this issue is establish a "window", e.g. only shrink when at (N/2)*.80 capacity.
+For example, start with an array at capacity and size 16. Adding one element
+doubles the size to 32, removing it then halves size to 16 again. If we only
+shrink at (N/2)*k (k < 1), then we would still double adding one at 16, but
+popping wouldn't halve capacity, we would have to go down to ~13 or ~14 total
+elements before calling a resize.
+
