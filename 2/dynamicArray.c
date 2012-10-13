@@ -1,4 +1,8 @@
-/*    dynamicArray_a1.c: Dynamic Array implementation. */
+/*
+    Jordan Bayles   Sat Oct 13 02:26:04 PDT 2012
+    Dynamic array implementation
+*/
+
 #include <assert.h>
 #include <stdlib.h>
 #include "dynamicArray.h"

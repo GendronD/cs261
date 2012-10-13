@@ -1,4 +1,11 @@
-/*    stack.c: Stack application. */
+/*
+    Jordan Bayles       Sat Oct 13 02:23:03 PDT 2012
+    No collaborators
+    Assignment #2: Stacks and Parenthesis
+    Developed in Arch Linux with the following workflow:
+    vim -> make + gcc -> gdb + valgrind
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "dynamicArray.h"

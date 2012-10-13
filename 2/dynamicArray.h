@@ -1,4 +1,9 @@
-/* 	dynArr.h : Dynamic Array implementation. */
+/*
+    Jordan Bayles   Sat Oct 13 02:25:21 PDT 2012
+    Header file for Dynamic Array functions, including bag / stack
+    function interfaces
+*/
+
 #ifndef DYNAMIC_ARRAY_INCLUDED
 #define DYNAMIC_ARRAY_INCLUDED 1
 
