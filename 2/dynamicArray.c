@@ -5,6 +5,7 @@
 
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include "dynamicArray.h"
 
 struct DynArr
@@ -237,7 +238,7 @@ void removeAtDynArr(DynArr *v, int idx)
 
     /* Explicitly clear v->data at idx in case idx is last element pos */
     v->data[ idx ] = 0;
-    for( i = idx + 1; i < v->size; ++i );
+    for( i = idx + 1; i < v->size; ++i )
         {
         v->data[ i - 1 ] = v->data[ i ];
         }
@@ -363,6 +364,7 @@ void removeDynArr(DynArr *v, TYPE val)
         if( EQ( v->data[ i ], val ) )
             {
             removeAtDynArr( v, i );
+            break;
             }
         }
 }
