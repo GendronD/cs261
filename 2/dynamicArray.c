@@ -364,6 +364,7 @@ void removeDynArr(DynArr *v, TYPE val)
         if( EQ( v->data[ i ], val ) )
             {
             removeAtDynArr( v, i );
+            break;
             }
         }
 }
@@ -384,7 +385,8 @@ int main( int argc, char **argv )
     printf( "Swapped element (pos0): %c\n", getDynArr( test, 0 ) );
     removeAtDynArr( test, 0 );
     printf( "Deleted element(pos0): %c\n", getDynArr( test, 0 ) );
-    printf( "Deleted element(pos1): %c\n", getDynArr( test, 1 ) );
+    // Should assert by design
+    //printf( "Deleted element(pos1): %c\n", getDynArr( test, 1 ) );
 
     /* Stack interface function tests */
     deleteDynArr( test );
