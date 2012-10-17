@@ -1,0 +1,6 @@
+
+1. What were the algorithmic complexities of the methods addLink and removeLink
+that you wrote back in Chapter Q?
+
+2. Given your answer to the previous question, what are the algorithmic complexities
+of the three principle Bag operations?
