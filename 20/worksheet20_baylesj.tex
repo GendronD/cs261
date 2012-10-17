@@ -1,0 +1,216 @@
+\documentclass[12pt,letterpaper]{article}
+
+\author{Jordan Bayles}
+%\date{}
+\title{}
+
+%Usepackage declarations
+\usepackage[left=1in,top=.5in,right=1in,bottom=.5in]{geometry}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgpagella}
+%\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{sectsty}
+\usepackage{slashed}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{latexsym}
+% Include for easy import of full pdf pages
+\usepackage{pdfpages}
+% Include for use of images
+\usepackage{graphicx}
+% Include for use of [H] placement specifier
+\usepackage{float}
+% Include for use of \toprule, \midrule, \bottomrule in tabular env.
+\usepackage{booktabs}
+% Include for setting spacing between lines
+\usepackage{setspace}
+
+%Package usages
+\sectionfont{\normalsize}
+\subsectionfont{\small}
+
+%%Fancy Header setup
+\pagestyle{fancy}
+% Clear default
+\fancyhead{}
+\fancyfoot{}
+%New settings
+\fancyhead[LE,RO]{\slshape \rightmark}
+\fancyhead[LO,RE]{\slshape \leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%New commands
+\newcommand{\comment}[1]{}
+\newcommand{\field}[1]{\mathbb{#1}} % requires amsfonts
+\newcommand{\script}[1]{\mathcal{#1}} % requires amsfonts
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage[font=small,format=plain,labelfont=bf,up,textfont=it,up]{caption}
+ 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\definecolor{lightgrey}{gray}{0.8}
+\definecolor{darkgrey}{gray}{1.6}
+
+\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{0.987\linewidth}{#1#2#3}}}
+\captionsetup[lstlisting]{format=listing, labelfont=white, indention=0pt, textfont=white, margin=0pt, font={bf,footnotesize}, singlelinecheck=false}
+\DeclareCaptionFont{white}{\color{white}}
+
+\renewcommand{\lstlistingname}{Code}
+\lstset{ %
+  %Some lang opts: C++, C, Java, Python, Matlab, TeX, HTML, PHP, SQL, Verilog, VHDL, make, ...
+  language=Octave,                    % the language of the code
+  basicstyle=\footnotesize\ttfamily , % the size of the fonts that are used for the code
+  numbers=left,                       % where to put the line-numbers
+  numberstyle=\scriptsize\color{darkgray}, % the style that is used for the line-numbers
+  stepnumber=2,                       % the step between two line-numbers. 
+  numbersep=5pt,                      % how far the line-numbers are from the code
+  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
+  showspaces=false,                   % show spaces adding particular underscores
+  showstringspaces=false,             % underline spaces within strings
+  showtabs=false,                     % show tabs within strings adding particular underscores
+  frame=tb,                           % adds a frame around the code
+  rulesepcolor=\color{gray},          % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
+  tabsize=2,                          % sets default tabsize to 2 spaces
+  captionpos=t,                       % sets the caption-position
+  breaklines=true,                    % sets automatic line breaking
+  breakatwhitespace=false,            % sets if automatic breaks should only happen at whitespace
+  title=\lstname,                     % show the filename of files included with \lstinputlisting;
+  keywordstyle=\color{blue},          % keyword style
+  commentstyle=\color{dkgreen},       % comment style
+  stringstyle=\color{mauve},          % string literal style
+  escapeinside={\%*}{*)},             % if you want to add a comment within your code
+  morekeywords={*,...}                % if you want to add more keywords to the set
+  framexbottommargin=5pt,
+}
+\begin{document}
+%\maketitle
+
+\begin{flushright}
+Jordan Bayles\\
+Worksheet 20\\
+\end{flushright}
+\begin{center}
+Worksheet 20 Implementation
+\end{center}
+
+%Sample Code listing
+\lstset{caption={Instructor provided code},label=DescriptiveLabel,language=C}
+\begin{lstlisting}
+void _dequeSetCapacity (struct deque *d, int newCap) {
+	int i;
+	/* Create a new underlying array*/
+	TYPE *newData = (TYPE*)malloc(sizeof(TYPE)*newCap);
+	assert(newData != 0);
+	/* copy elements to it */
+	int j = v->beg;
+	for(i = 0; i <  v->size; i++)
+	{
+		newData[i] = v->data[j];
+		j = j + 1;
+		if(j >= v->capacity)
+			j = 0;
+	}
+	/* Delete the oldunderlying array*/
+	free(v->data);
+	/* update capacity and size and data*/
+	v->data = newData;
+	v->capacity = newCap;
+	v->beg = 0;
+}
+
+void dequeFree (struct deque *d) {
+   free(d->data); d->size = 0; d->capacity = 0;
+}
+
+struct deque {
+	TYPE * data;
+	int capacity;
+	int size;
+	int start;
+};
+
+void dequeInit (struct deque *d, int initCapacity) {
+   d->size = d->beg = 0;
+   d->capacity = initCapacity; assert(initCapacity > 0);
+   d->data = (TYPE *) malloc(initCapacity * sizeof(TYPE));
+   assert(d->data != 0);
+
+}
+int dequeSize (struct deque *d) { return d->size; }
+void _dequeDoubleCapacity (struct deque *d);  
+\end{lstlisting}
+\newpage
+\lstset{caption={Add to front function},label=DescriptiveLabel,language=C}
+\begin{lstlisting}
+void dequeAddFront (struct deque *d, TYPE newValue) {
+	if (d->size >= d->capacity) _dequeSetCapacity(d, 2*d->capacity);
+	
+	d->start -= 1;	// Shift starting position back to add new element
+	d->size += 1;
+	d->data[ d->start ] = newValue;	// Insert element at new starting position
+	
+}
+\end{lstlisting}
+
+\lstset{caption={Add to back function},label=DescriptiveLabel,language=C}
+\begin{lstlisting}
+void dequeAddBack (struct deque *d, TYPE newValue) {
+	int end;
+    if (d->size >= d->capacity) _dequeSetcapacity(d, 2* d->capacity);
+    
+    // d->start + d->size should point to the spot for the *next* element at back
+    end = d->start + d->size;
+    end -= ( end >= d->capacity ) ? d->capacity : 0;
+    
+    d->data[ end ] = newValue;
+    d->size += 1;
+}
+\end{lstlisting}
+
+\lstset{caption={Return front function},label=DescriptiveLabel,language=C}
+\begin{lstlisting}
+TYPE dequeFront (struct deque *d) {
+	return( d->data[ d->start ] );
+}
+\end{lstlisting}
+
+\lstset{caption={Return back function},label=DescriptiveLabel,language=C}
+\begin{lstlisting}
+TYPE dequeBack (struct deque *d) {
+    int end = d->start + d->size;
+    end -= ( end >= d->capacity ) ? d->capacity : 0;
+    return( d->data[ end ] );
+}
+\end{lstlisting}
+
+\lstset{caption={Remove front function},label=DescriptiveLabel,language=C}
+\begin{lstlisting}
+void dequeRemoveFront (struct deque *d) {
+	d->data[ start ] = 0;
+	d->start += 1;
+	d->size -= 1;
+}
+\end{lstlisting}
+
+\lstset{caption={Remove back function},label=DescriptiveLabel,language=C}
+\begin{lstlisting}
+void dequeRemoveBack (struct deque *d) {
+	int end = d->start + d->size;
+    end -= ( end >= d->capacity ) ? d->capacity : 0;
+    d->data[ end ] = 0; // Enough to decrement size, but explicit better than implicit
+    d->size -= 1;
+}
+\end{lstlisting}
+
+\end{document}
