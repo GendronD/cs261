@@ -1,14 +1,17 @@
-\documentclass[12pt,letterpaper]{article}
+\documentclass[10pt,letterpaper]{article}
 
-\author{Jordan Bayles}
+\author{Jordan Bayles\\
+        Cameron Evensen\\
+        Marshal Horn\\
+        Robert Plascencia}
 %\date{}
-\title{}
+\title{JCMR, Worksheet 22}
 
 %Usepackage declarations
 \usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry}
-%\usepackage[T1]{fontenc}
-%\usepackage{tgpagella}
-%\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage[T1]{fontenc}
+\usepackage{tgpagella}
+\usepackage[protrusion=true,expansion=true]{microtype}
 \usepackage{xcolor}
 \usepackage{color}
 \usepackage{fancyhdr}
@@ -70,7 +73,7 @@
 \lstset{ %
   %Some lang opts: C++, C, Java, Python, Matlab, TeX, HTML, PHP, SQL, Verilog, VHDL, make, ...
   language=Octave,                    % the language of the code
-  basicstyle=\footnotesize\ttfamily , % the size of the fonts that are used for the code
+  basicstyle=\small\ttfamily,         % the size of the fonts that are used for the code
   numbers=left,                       % where to put the line-numbers
   numberstyle=\scriptsize\color{darkgray}, % the style that is used for the line-numbers
   stepnumber=2,                       % the step between two line-numbers. 
@@ -94,40 +97,54 @@
   framexbottommargin=5pt,
 }
 \begin{document}
-%\maketitle
-
 \begin{flushright}
-%name \\
-%title \\
-%professor \\
-%date 
+Jordan Bayles\\
+Cameron Evensen\\
+Marshal Horn\\
+Robert Plascencia
 \end{flushright}
 
 \begin{center}
-%title
+JCMR, Worksheet 22
 \end{center}
 
+\section{Code implementation}
 %Sample Code listing
-\lstset{caption={Descriptive Caption Text},label=DescriptiveLabel,language=C}
-\begin{lstlisting}
-!!code!!
-for (int x = 0; x < 5; ++x) {
-	cout << x;
+\lstset{caption={Worksheet \#22 - Code implementation},label=DescriptiveLabel,language=C}
+\lstinputlisting[language=C]{code_final.c}
+\newpage
+
+\section{Question responses}
+\subsection
+{
+What were the algorithmic complexities of the methods addLink and removeLink
+that you wrote back in Chapter Q?
 }
-\end{lstlisting}
+Given that the search phrase ``Chapter Q'' gives exactly one result for the class
+documentation (this worksheet), I will assume that is some sort of type or
+stale reference. However, based upon the methods written in this worksheet
+the answer is much clearer. The \verb!_addLink! function accepts a pointer
+to the list and the link to add before, same for the \verb!_removeLink! function.
 
-% Include a full PDF:
-% \includepdf[pages=-]{written_portion.pdf}
+\subsection
+{
+Given your answer to the previous question, what are the algorithmic complexities
+of the three principle Bag operations?
+}
+Because the \verb!_addLink! and \verb!_removeLink! functions are constant time
+(the nearby link is passed in), the algorithmic complexities of the add,
+remove and contains Bag operations can be found in their respective linkedList*
+functions:
 
-% Or for a separate file:
-%\lstinputlisting[language=Python]{source_filename.py}
-
-%Sample Figure
-% \begin{figure}[H]
-%\centering
-%\includegraphics[scale=1]{file}
-%\caption{New caption style}
-%\label{fig:}
-%\end{figure}
+\begin{itemize}
+    \item \verb!linkedListAdd! is constant time (front of linkedList), or
+        $\mathcal{O}( 1 )$.
+    \item \verb!linkedListContains! is linear time, as it must iterate through
+        the linked list in order to find the element to return its value. Worst
+        case is $n$ operations, so the contains operation is $\mathcal{O}(n)$.
+    \item Although the actual remove step is constant time, because \verb!linkedListRemove!
+        must first iterate through the list to find the element to remove (similar
+        to the contains function), \verb!linkedListRemove! is also $\mathcal{O}(n)$.
+\end{itemize}
 
 \end{document}
