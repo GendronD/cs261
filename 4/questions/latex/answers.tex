@@ -1,0 +1,74 @@
+\documentclass[12pt,letterpaper]{article}
+
+\author{Jordan Bayles}
+%\date{}
+\title{}
+
+%Usepackage declarations
+\usepackage[left=1in,top=1in,right=1in,bottom=1in]{geometry}
+%\usepackage[T1]{fontenc}
+%\usepackage{tgpagella}
+%\usepackage[protrusion=true,expansion=true]{microtype}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{sectsty}
+\usepackage{slashed}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{latexsym}
+% Include for easy import of full pdf pages
+\usepackage{pdfpages}
+% Include for use of images
+\usepackage{graphicx}
+% Include for use of [H] placement specifier
+\usepackage{float}
+% Include for use of \toprule, \midrule, \bottomrule in tabular env.
+\usepackage{booktabs}
+% Include for setting spacing between lines
+\usepackage{setspace}
+
+%Package usages
+\sectionfont{\normalsize}
+\subsectionfont{\small}
+
+%%Fancy Header setup
+\pagestyle{fancy}
+% Clear default
+\fancyhead{}
+\fancyfoot{}
+%New settings
+\fancyhead[LE,RO]{\slshape \rightmark}
+\fancyhead[LO,RE]{\slshape \leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%New commands
+\newcommand{\comment}[1]{}
+\newcommand{\field}[1]{\mathbb{#1}} % requires amsfonts
+\newcommand{\script}[1]{\mathcal{#1}} % requires amsfonts
+\newcommand{\pd}[2]{\frac{\partial#1}{\partial#2}}
+
+\begin{document}
+%\maketitle
+
+\begin{flushright}
+Jordan Bayles
+CS 261 - Assignment \#4
+\end{flushright}
+
+\begin{center}
+Question \#2
+\end{center}
+
+There are many possible orders that satisfy a balanced tree, however what they
+all have in common is that each depth of the binary tree must be assigned in
+order. One such possible ordering is given by:
+
+\begin{verbatim}
+12, 8, 15, 4, 9, 13
+\end{verbatim}
+\end{document}
