@@ -7,7 +7,6 @@
 #define __BST_H
 
 /* Defines the type to be stored in the data structure.  These macros
- * are for convenience to avoid having to search and replace/dup code
  * when you want to build a structure of doubles as opposed to ints
  * for example.
  */

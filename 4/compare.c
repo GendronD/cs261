@@ -25,16 +25,26 @@
  */
 int compare(TYPE left, TYPE right)
 {
-    /*FIXME: write this*/
-    return 0;
+    int result = *( (int *)left ) - *( (int *)right );
+    if( result < 0 )
+    {
+        return -1;
+    }
+    else if( result > 0 )
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 
 }
 
 /*Define this function, type casting the value of void * to the desired type*/
 void print_type(TYPE curval)
 {
-    /*FIXME: write this*/
-
+    printf( "%d", *( (int *)curval ) );
 }
 
 
