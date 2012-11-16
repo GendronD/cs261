@@ -1,4 +1,16 @@
-/*	dynArr.c: Dynamic Array implementation. */
+/*
+ * ============================================================================
+ *
+ *         Author:  Jordan Bayles (baylesj), baylesj@onid.orst.edu
+ *        Company:  Oregon State University
+ *        Created:  11/10/2012 10:56:23 PM
+ *
+ *    Environment:  vim + gdb + valgrind, gcc compiler on Arch Linux
+ *    Description:  Dynamic array heap implementation. No help received on
+ *                  on this assignment.
+ *
+ * ============================================================================
+ */
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -133,7 +145,7 @@ void _dynArrSetCapacity(DynArr *v, int newCap)
         newData [ i ] = v->data [ i ];
         }
 
-    /* Delete the oldunderlying array*/
+    /* Delete the old underlying array*/
     free(v->data);
     /* update capacity and size and data*/
     v->data = newData;
@@ -258,13 +270,11 @@ void removeAtDynArr(DynArr *v, int idx){
     assert(idx >= 0);
 
     //Move all elements up
-
     for( i = idx; i < v->size - 1; i++ ) {
         v->data [ i ] = v->data [ i + 1 ];
         }
 
     v->size--;
-
 }
 
 /* ************************************************************************
@@ -282,17 +292,7 @@ void removeAtDynArr(DynArr *v, int idx){
 int isEmptyDynArr(DynArr *v)
 {
     assert(v != 0);
-    return !( v->size );
-    /* alternatively:
-
-       if (v->size == 0)
-        return 1;
-       else return 0;
-
-     */
-
-
-
+    return( v->size == 0 );
 }
 
 /*  Push an element onto the top of the stack
@@ -383,7 +383,8 @@ void removeDynArr(DynArr *v, TYPE val)
     int i = 0;
     assert(v != 0);
     assert(!isEmptyDynArr(v) );
-    assert(containsDynArr(v, val) );  /* Design decision: Error if they try to remove something not in there! */
+    /* Design decision: Error if they try to remove something not in there! */
+    assert(containsDynArr(v, val) );
 
     for( i = 0; i < sizeDynArr(v); i++ )
         if( compare(v->data [ i ], val) == 0 )
@@ -441,8 +442,8 @@ void _adjustHeap(DynArr *heap, int max, int pos);
 int _smallerIndexHeap(DynArr *heap, int i, int j)
 {
     assert( heap != NULL );
-    assert( i < heap->size );
-    assert( j < heap->size );
+    assert( i < sizeDynArr( heap ) );
+    assert( j < sizeDynArr( heap ) );
 
     int sml_idx = -1;
     if( compare( getDynArr( heap, i ), getDynArr( heap, j ) ) == -1 )
@@ -464,7 +465,7 @@ int _smallerIndexHeap(DynArr *heap, int i, int j)
  */
 TYPE getMinHeap(DynArr *heap)
 {
-    assert( ( heap != NULL ) && ( heap->size > 0 ) );
+    assert( ( heap != NULL ) && ( sizeDynArr( heap ) > 0 ) );
     /* Assumes first node is stored in the zeroth location */
     return( getDynArr( heap, 0 ) );
 }
@@ -509,7 +510,7 @@ void addHeap(DynArr *heap, TYPE val)
 void _adjustHeap(DynArr *heap, int max, int pos)
 {
     assert( heap != NULL );
-    assert( max <= heap->size );
+    assert( max <= sizeDynArr( heap ) );
     int left_child = pos * 2 + 1;
     int right_child = pos * 2 + 2;
     int sml_child = -1;
@@ -519,6 +520,7 @@ void _adjustHeap(DynArr *heap, int max, int pos)
         /* Check for a second child */
         if( left_child < max )
             {
+            /* Determine the smallest child */
             sml_child = _smallerIndexHeap( heap, left_child, right_child );
             }
         else
@@ -526,16 +528,17 @@ void _adjustHeap(DynArr *heap, int max, int pos)
             /* Only one child, so smallest by default */
             sml_child = right_child;
             }
-        if( compare( getDynArr( heap, sml_child ), getDynArr( heap, pos ) ) == 01 )
+        if( compare( getDynArr( heap, sml_child ), getDynArr( heap, pos ) ) == -1 )
             {
             swapDynArr( heap, pos, sml_child );
             }
         _adjustHeap( heap, max, sml_child );
         }
+
     /* Only one child */
     else if( left_child < max )
         {
-        if( compare( getDynArr( heap, left_child ), getDynArr( heap, pos ) ) == 01 )
+        if( compare( getDynArr( heap, left_child ), getDynArr( heap, pos ) ) == -1 )
             {
             swapDynArr( heap, pos, left_child );
             }
@@ -577,12 +580,12 @@ void removeMinHeap(DynArr *heap)
 void _buildHeap(DynArr *heap)
 {
     assert( heap != NULL );
-    assert( heap->size > 0 );
+    assert( sizeDynArr( heap ) > 0 );
 
     /* Start at the last non-leaf node */
-    for( int i = ( heap->size / 2 ) - 1; i >= 0; --i )
+    for( int i = ( sizeDynArr( heap ) / 2 ) - 1; i >= 0; --i )
         {
-        _adjustHeap( heap, heap->size, i );
+        _adjustHeap( heap, sizeDynArr( heap ), i );
         }
 }
 
@@ -597,10 +600,10 @@ void _buildHeap(DynArr *heap)
 void sortHeap(DynArr *heap)
 {
     assert( heap != NULL );
-    assert( heap->size > 0 );
+    assert( sizeDynArr( heap ) > 0 );
 
     _buildHeap( heap );
-    for( int i = ( heap->size - 1 ); i > 0; --i )
+    for( int i = ( sizeDynArr( heap ) - 1 ); i > 0; --i )
         {
         /* Swap the outer two elements in the heap, then adjust it */
         swapDynArr( heap, i, 0 );

@@ -1,3 +1,16 @@
+/*
+ * ============================================================================
+ *
+ *         Author:  Jordan Bayles (baylesj), baylesj@onid.orst.edu
+ *        Company:  Oregon State University
+ *        Created:  11/10/2012 10:56:23 PM
+ *
+ *    Environment:  vim + gdb + valgrind, gcc compiler on Arch Linux
+ *    Description:  To-do list implementation. No help received on
+ *                  on this assignment.
+ *
+ * ============================================================================
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
