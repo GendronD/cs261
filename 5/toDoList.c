@@ -15,8 +15,11 @@
  */
 TYPE createTask (int priority, char *desc)
 {
-    /* FIXME */
+    struct Task new_task;
+    new_task.priority = priority;
+    strcpy( new_task.description, desc );
 
+    return( new_task );
 }
 
 /*  Save the list to a file
@@ -57,13 +60,14 @@ void loadList(DynArr *heap, FILE *filePtr)
 {
     TYPE task;
     char line [ 100 ];  /* Assume lines < 100 */
-    char desc [ TASK_DESC_SIZE ], *nlptr;
+    char desc [ TASK_DESC_SIZE ];
     int priority;
 
     /* Read the priority first, then the description.
      * fgets() is used to read string with spaces
      */
-#ifdef NOTDEF
+#ifdef FSCANF
+    char *nlptr;
     while( fscanf(filePtr, "%d\t", &priority) != EOF )
         {
         /* fgets() stops reading at \n character */
@@ -76,7 +80,7 @@ void loadList(DynArr *heap, FILE *filePtr)
         task = createTask(priority, desc);
         addHeap(heap, task);
         }
-#endif
+#else
 
     while( fgets(line, sizeof( line ), filePtr) != 0 )
         {
@@ -84,7 +88,7 @@ void loadList(DynArr *heap, FILE *filePtr)
         task = createTask(priority, desc);
         addHeap(heap, task);
         } /* should use feof to make sure it found eof and not error*/
-
+#endif
 }
 
 /*  Print the list
