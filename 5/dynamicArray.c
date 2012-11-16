@@ -46,11 +46,11 @@ void _initDynArr(DynArr *v, int capacity)
 	pre:	none
 	post:	none
 	ret:	a non-null pointer to a dynArr of cap capacity
-			and 0 elements in it.		
+			and 0 elements in it.
 */
 DynArr* createDynArr(int cap)
 {
-	DynArr *r; 
+	DynArr *r;
 	assert(cap > 0);
 	r = malloc(sizeof( DynArr));
 	assert(r != 0);
@@ -58,7 +58,7 @@ DynArr* createDynArr(int cap)
 	return r;
 }
 
-/* Deallocate data array in dynamic array. 
+/* Deallocate data array in dynamic array.
 
 	param: 	v		pointer to the dynamic array
 	pre:    v is not null
@@ -79,7 +79,7 @@ void freeDynArr(DynArr *v)
 	v->capacity = 0;
 }
 
-/* Deallocate data array and the dynamic array ure. 
+/* Deallocate data array and the dynamic array ure.
 
 	param: 	v		pointer to the dynamic array
 	pre:	v is not null
@@ -93,7 +93,7 @@ void deleteDynArr(DynArr *v)
 	free(v);
 }
 
-/* Resizes the underlying array to be the size cap 
+/* Resizes the underlying array to be the size cap
 
 	param: 	v		pointer to the dynamic array
 	param:	cap		the new desired capacity
@@ -121,18 +121,18 @@ void _dynArrSetCapacity(DynArr *v, int newCap)
 
 #ifdef ALTERNATIVE
 	int i;
-	
+
 	/* Create a new underlying array*/
 	TYPE *newData = (TYPE*)malloc(sizeof(TYPE)*newCap);
 	assert(newData != 0);
-	
+
 	/* copy elements to it */
-	
+
 	for(i = 0; i < v->size; i++)
 	{
 		newData[i] = v->data[i];
 	}
-	
+
 	/* Delete the oldunderlying array*/
 	free(v->data);
 	/* update capacity and size and data*/
@@ -171,14 +171,14 @@ void addDynArr(DynArr *v, TYPE val)
 	/* Check to see if a resize is necessary */
 	if(v->size >= v->capacity)
 		_dynArrSetCapacity(v, 2 * v->capacity);
-	
+
 	v->data[v->size] = val;
 	v->size++;
 
 }
 
 /*	Get an element from the dynamic array from a specified position
-	
+
 	param: 	v		pointer to the dynamic array
 	param:	pos		integer index to get the element from
 	pre:	v is not null
@@ -193,7 +193,7 @@ TYPE getDynArr(DynArr *v, int pos)
 	assert(v!=0);
 	assert(pos < v->size);
 	assert(pos >= 0);
-   
+
 	return v->data[pos];
 }
 
@@ -202,7 +202,7 @@ TYPE getDynArr(DynArr *v, int pos)
 
 	param: 	v		pointer to the dynamic array
 	param:	pos		the index to put the value into
-	param:	val		the value to insert 
+	param:	val		the value to insert
 	pre:	v is not null
 	pre:	v is not empty
 	pre:	pos >= 0 and pos < size of the array
@@ -267,13 +267,11 @@ void removeAtDynArr(DynArr *v, int idx){
 
 }
 
-
-
 /* ************************************************************************
 	Stack Interface Functions
 ************************************************************************ */
 
-/*	Returns boolean (encoded in an int) demonstrating whether or not the 
+/*	Returns boolean (encoded in an int) demonstrating whether or not the
 	dynamic array stack has an item on it.
 
 	param:	v		pointer to the dynamic array
@@ -287,7 +285,7 @@ int isEmptyDynArr(DynArr *v)
 	return !(v->size);
 	/* alternatively:
 
-	if(v->size == 0)
+	if (v->size == 0)
 		return 1;
 	else return 0;
 
@@ -312,7 +310,7 @@ void pushDynArr(DynArr *v, TYPE val)
 	addDynArr(v, val);
 }
 
-/*	Returns the element at the top of the stack 
+/*	Returns the element at the top of the stack
 
 	param:	v		pointer to the dynamic array
 	pre:	v is not null
@@ -326,7 +324,7 @@ TYPE topDynArr(DynArr *v)
 	return v->data[v->size-1];
 }
 
-/* Removes the element on top of the stack 
+/* Removes the element on top of the stack
 
 	param:	v		pointer to the dynamic array
 	pre:	v is not null
@@ -338,7 +336,7 @@ void popDynArr(DynArr *v)
 {
 	assert(v!=0);
 	assert(! isEmptyDynArr(v));
-	v->size--; 
+	v->size--;
 }
 
 /* ************************************************************************
@@ -362,7 +360,7 @@ int containsDynArr(DynArr *v, TYPE val)
 
 	assert(v!=0);
 	assert(!isEmptyDynArr(v));
-   
+
 	for(i = 0; i < sizeDynArr(v); i++)
       if(compare(v->data[i], val) == 0)
          return 1;
@@ -390,7 +388,7 @@ void removeDynArr(DynArr *v, TYPE val)
 	for(i = 0; i < sizeDynArr(v); i++)
       if(compare(v->data[i], val) == 0)
       {
-           removeAtDynArr(v,i); 
+           removeAtDynArr(v,i);
            break;
       }
 }
@@ -442,8 +440,20 @@ void _adjustHeap(DynArr *heap, int max, int pos);
 */
 int _smallerIndexHeap(DynArr *heap, int i, int j)
 {
-  /* FIXME */
-  return 0;
+    assert( heap != NULL );
+    assert( i < size );
+    assert( j < size );
+
+    int sml_idx = -1;
+    if( compare( getDynArr( heap, i ), getDynArr( heap, j ) ) == -1 )
+        {
+        sml_idx = i;
+        }
+    else
+        {
+        sml_idx = j;
+        }
+    return( sml_idx );
 }
 
 /*	Get the first node, which has the min priority, from the heap
@@ -454,7 +464,9 @@ int _smallerIndexHeap(DynArr *heap, int i, int j)
 */
 TYPE getMinHeap(DynArr *heap)
 {
-  /* FIXME */  
+    assert( ( heap != NULL ) && ( heap->size > 0 ) );
+    /* Assumes first node is stored in the zeroth location */
+    return( getDynArr( heap, 0 ) );
 }
 
 /*	Add a node to the heap
@@ -466,8 +478,24 @@ TYPE getMinHeap(DynArr *heap)
 */
 void addHeap(DynArr *heap, TYPE val)
 {
-    /* FIXME */
+    int parent;
+    int pos = sizeDynArr( heap );
 
+    addDynArr( heap, val );
+
+    while( pos != 0 )
+    {
+        parent = ( pos - 1 ) / 2;
+        if( compare( getDynArr( heap, pos ), getDynArr( head, parent ) ) == -1 )
+        {
+            swapDynArr( heap, parent, pos );
+            pos = parents;
+        }
+        else
+        {
+            return;
+        }
+    }
 }
 
 /*	Adjust heap to maintain heap property
@@ -480,7 +508,41 @@ void addHeap(DynArr *heap, TYPE val)
 */
 void _adjustHeap(DynArr *heap, int max, int pos)
 {
-   /* FIXME */
+    assert( heap != NULL );
+    assert( max <= heap->size );
+    int left_child = pos * 2 + 1;
+    int right_child = pos * 2 + 2;
+    int sml_child = -1;
+
+    if( right_child < max )
+    {
+        /* Check for a second child */
+        if( left_child < max )
+        {
+           sml_child = _smallerIndexHeap( heap, left_child, right_child );
+        }
+        else
+        {
+            /* Only one child, so smallest by default */
+            sml_child = right_child;
+        }
+        if( compare( getDynArr( heap, sml_child ), getDynArr( heap, pos ) ) == 01 )
+        {
+            swapDynArr( heap, pos, sml_child );
+        }
+        _adjustHeap( heap, max, sml_child );
+    }
+    /* Only one child */
+    else if( left_child < max )
+    {
+        if( compare( getDynArr( heap, left_child ), getDynArr( heap, pos ) ) == 01 )
+        {
+            swapDynArr( heap, pos, left_child );
+        }
+        _adjustHeap( heap, max, left_child );
+    }
+
+    /* No children, so done. */
 }
 
 /*	Remove the first node, which has the min priority, from the heap
@@ -491,21 +553,39 @@ void _adjustHeap(DynArr *heap, int max, int pos)
 */
 void removeMinHeap(DynArr *heap)
 {
-   /* FIXME */
+    int last;
+    assert( sizeDynArr( heap ) > 0 );
+    last = sizeDynArr( heap ) - 1;
 
+    /* Copy the last element to the first */
+    putDynArr( heap, 0, getDynArr( heap, last ) );
+
+    /* Remove last element */
+    removeAtDynArr( heap, last );
+
+    /* Rebuild heap */
+    _adjustHeap( heap, last, 0 );
 }
 
 /* builds a heap from an arbitrary dynArray
 
-    param: v    dynamicArray
-    pre:    v is not empty
-    post: v is a proper heap
+    param: heap    dynamicArray
+    pre:   heap is not empty
+    post:  heap is a proper heap
 */
 
 void _buildHeap(DynArr *heap)
 {
-    /* FIXME */
+    assert( heap != NULL );
+    assert( heap->size > 0 );
+
+    /* Start at the last non-leaf node */
+    for( int i = ( heap->size / 2 ) - 1; i >= 0; --i )
+    {
+    _adjustHeap( heap, heap->size, i );
+    }
 }
+
 /*
     In-place sort of the heap
 
@@ -516,7 +596,15 @@ void _buildHeap(DynArr *heap)
 
 void sortHeap(DynArr *heap)
 {
-   /* FIXME */
+    assert( heap != NULL );
+    assert( heap->size > 0 );
 
+    _buildHeap( heap );
+    for( int i = ( heap->size - 1 ); i > 0; --i )
+    {
+    /* Swap the outer two elements in the heap, then adjust it */
+    swapDynArr( heap, i, 0 );
+    _adjustHeap( heap, i, 0 );
+    }
 }
 

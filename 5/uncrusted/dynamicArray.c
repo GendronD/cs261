@@ -442,8 +442,21 @@ void _adjustHeap(DynArr *heap, int max, int pos);
  */
 int _smallerIndexHeap(DynArr *heap, int i, int j)
 {
-    /* FIXME */
-    return 0;
+    assert( i < head->size );
+    assert( j < head->size );
+
+    int smallest = -1;
+    /* Determine which element is smaller in value and return it */
+    if( head->data[ i ] < head->data[ j ] )
+    {
+        smallest = i;
+    }
+    else if( head->data[ i ] > head->data[ i ] )
+    {
+        smallest = j;
+    }
+
+    return smallest;
 }
 
 /*	Get the first node, which has the min priority, from the heap
@@ -454,7 +467,9 @@ int _smallerIndexHeap(DynArr *heap, int i, int j)
  */
 TYPE getMinHeap(DynArr *heap)
 {
-    /* FIXME */
+    assert( head->size > 0 );
+    /* Simply return the first node in the heap */
+    return head->data[ 0 ];
 }
 
 /*	Add a node to the heap
