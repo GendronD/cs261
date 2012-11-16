@@ -1,4 +1,4 @@
-/*  dynArr.h : Dynamic Array implementation. */
+/* 	dynArr.h : Dynamic Array implementation. */
 #ifndef DYNAMIC_ARRAY_INCLUDED
 #define DYNAMIC_ARRAY_INCLUDED 1
 #include "type.h"
@@ -15,7 +15,7 @@ int sizeDynArr(DynArr *v);
 void addDynArr(DynArr *v, TYPE val);
 TYPE getDynArr(DynArr *v, int pos);
 void putDynArr(DynArr *v, int pos, TYPE val);
-void swapDynArr(DynArr *v, int i, int j);
+void swapDynArr(DynArr *v, int i, int  j);
 void removeAtDynArr(DynArr *v, int idx);
 
 /* Stack interface. */
