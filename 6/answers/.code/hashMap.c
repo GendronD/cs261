@@ -1,16 +1,3 @@
-/*
- * ============================================================================
- *
- *         Author:  Jordan Bayles (baylesj), baylesj@onid.orst.edu
- *        Company:  Oregon State University
- *        Created:  11/24/2012 01:16:15 AM
- *
- *    Environment:  vim + gdb + valgrind, gcc compiler on Arch Linux
- *    Description:  Implementation of hash map functions
- *
- * ============================================================================
- */
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,7 +32,7 @@ int stringHash2(char * str)
     int i;
     int r = 0;
     for (i = 0; str[i] != '\0'; i++)
-        r += (i+1) * str[i]; /*the difference between 1 and 2 is on this line*/
+        r += (i+1) * str[i] * 2; /*the difference between 1 and 2 is on this line*/
     return r;
 }
 
@@ -74,26 +61,7 @@ void initMap (struct hashMap * ht, int tableSize)
  */
 void freeMap (struct hashMap * ht)
 {
-    hashLink *ptr1 = NULL;
-    hashLink *ptr2 = NULL;
-
     /* free data */
-    for( int i = 0; i < ht->tableSize; ++i )
-    {
-        if( ht->table[ i ] != NULL )
-        {
-            ptr1 = &ht->table[ i ][ 0 ];
-            ptr2 = ptr1->next;
-            while( ptr1 != NULL )
-                {
-                ptr2 = ptr1->next;
-                free( ptr1->key );
-                free( ptr1 );
-                ptr1 = ptr2;
-                }
-        }
-    }
-
     free( ht->table );
     /* Clear hash table data */
     ht->tableSize = 0;
@@ -211,34 +179,12 @@ int containsKey (struct hashMap * ht, KeyType k)
 void removeKey (struct hashMap * ht, KeyType k)
 {
     assert( ht != NULL );
-    struct hashLink *ptr = ht->table[ findKeyIndex( ht, k ) ];
 
-    /* Check parent link */
-    if( compare( ptr->key, k ) == 0 )
+    if( containsKey( ht, k ) )
     {
-        struct hashLink *ptr_tmp = ptr->next;
-        free( ptr->key );
-        free( ptr );
-        ht->table[ findKeyIndex( ht, k ) ] = ptr_tmp;
+        free( ht->table[ findKeyIndex( ht, k ) ] );
         ht->count -= 1;
-        return;
     }
-
-    /* Check child links */
-    while( ptr->next != NULL )
-    {
-        if( compare( ptr->next->key, k ) == 0 )
-        {
-            struct hashLink *ptr_tmp = ptr->next->next;
-            free( ptr->next->key );
-            free( ptr->next );
-            ptr->next = ptr_tmp;
-            ht->count -= 1;
-            return;
-        }
-        ptr = ptr->next;
-    }
-
 }
 
 /* Desc: Find the number of hashLinks in the table

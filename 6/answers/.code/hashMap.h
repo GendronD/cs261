@@ -1,17 +1,5 @@
-/*
- * ============================================================================
- *
- *         Author:  Jordan Bayles (baylesj), baylesj@onid.orst.edu
- *        Company:  Oregon State University
- *        Created:  11/24/2012 01:16:15 AM
- *
- *    Environment:  vim + gdb + valgrind, gcc compiler on Arch Linux
- *    Description:  Implementation of hash map functions
- *
- * ============================================================================
- */
-# ifndef HASH_MAP_H
-# define HASH_MAP_H
+# ifndef HashMap
+# define HashMap
 
 # define KeyType char *
 # define ValueType int

@@ -1,17 +1,3 @@
-/*
- * ============================================================================
- *
- *         Author:  Jordan Bayles (baylesj), baylesj@onid.orst.edu
- *        Company:  Oregon State University
- *        Created:  11/24/2012 01:17:06 AM
- *
- *    Environment:  vim + gdb + valgrind, gcc compiler on Arch Linux
- *    Description:  Main file of program, adds elements in an input file
- *                  to an implementation of a hash map.
- *
- * ============================================================================
- */
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,8 +20,12 @@ int main (int argc, const char * argv[]) {
     const char* filename;
     char *word;
     FILE *input;
+
     struct hashMap hashTable;
+    struct hashMap hashTable2;
+
     int tableSize = 1000;
+    int tableSize2 = 10;
     clock_t timer;
 
     /*
@@ -56,6 +46,10 @@ int main (int argc, const char * argv[]) {
     timer = clock();
 
     initMap(&hashTable, tableSize);
+    initMap(&hashTable2, tableSize2);
+
+    printf( "sH1 %d, %d\n", stringHash1( "abcde" ), stringHash1( "edcba" ) );
+    printf( "sH2 %d, %d\n", stringHash2( "abcde" ), stringHash2( "edcba" ) );
 
     /* Loop through entries */
     while( ( word = getWord( input ) ) )
@@ -65,16 +59,40 @@ int main (int argc, const char * argv[]) {
         {
             ValueType *val = atMap( &hashTable, word );
             assert( val != NULL );
-            ( *val )++;
-            /* Not adding word to hash table, so free it here */
-            free( word );
+            insertMap( &hashTable, word, *val + 1 );
         }
         /* Else insert with occurrence count of 1 */
         else
         {
-        insertMap( &hashTable, word, 1 );
+            insertMap( &hashTable, word, 1 );
+        }
+
+    }
+    fclose( input );
+    timer = clock() - timer;
+    printf("large ran in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
+
+    timer = clock();
+    input = fopen( filename, "r" );
+    while( ( word = getWord( input ) ) )
+    {
+        if( containsKey( &hashTable2, word ) )
+        {
+            ValueType *val2 = atMap( &hashTable2, word );
+            assert( val2 != NULL );
+            insertMap( &hashTable2, word, *val2 + 1 );
+        }
+        /* Else insert with occurrence count of 1 */
+        else
+        {
+            insertMap( &hashTable2, word, 1 );
         }
     }
+    timer = clock() - timer;
+    printf("small ran in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
+
+    printf( "size: %d, empty buckets: %d\n", hashTable.tableSize, emptyBuckets( &hashTable ) );
+    printf( "size: %d, empty buckets: %d\n", hashTable2.tableSize, emptyBuckets( &hashTable2 ) );
 
     /* Print hash map */
     for( int i = 0; i < hashTable.tableSize; ++i )
@@ -83,7 +101,7 @@ int main (int argc, const char * argv[]) {
 
         while( lnk != NULL )
         {
-            printf( "%d, %d, %s\n", i, lnk->value, lnk->key );
+            //printf( "%d, %d, %s\n", i, lnk->value, lnk->key );
             lnk = lnk->next;
         }
     }
@@ -93,7 +111,6 @@ int main (int argc, const char * argv[]) {
 
     printf("closing file...\n");
     fclose( input );
-    freeMap( &hashTable );
     return 0;
 }
 

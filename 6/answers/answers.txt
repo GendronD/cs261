@@ -1,0 +1,71 @@
+// Turn in these in the comment section on TEACH
+
+Give an example of two words that would hash to the same value using
+stringHash1() but would not using stringHash2().
+
+stringHash1() simply sums the values of all characters in the input string,
+so any two words that have the exact collection of letters in them would
+have the same hash. For example, "rage" and "gear" have the same hash in
+stringHash1() but not in stringHash2().
+
+---
+Why does the above make stringHash2() superior to stringHash1()?
+
+Assuming a string is limited to ASCII characters, stringHash2() is guaranteed
+to have a unique result for all unique strings (depending on offset).
+By offsetting the ASCII value of each character relative to its position in
+the string, issues with words with the same letters are resolved.
+
+---
+When you run your program on the same input file but one run using stringHash1()
+and on the other run using stringHash2(). Is it possible for your size()
+function to return different values?
+
+Size returns the number of hashLinks in the table, which should be directly
+equivalent to the number of unique keys in the table. Regardless of the hash
+function and table size used, there should not be any variance for the same
+word set.
+
+---
+When you run your program on the same input file using stringHash1() on one run
+and using stringHash2() on another, is it possible for your tableLoad()
+function to return different values?
+
+The tableLoad() function as designed returns the number of hashLinks divided
+by the number of buckets. Regardless of the hash function utilized, this
+should not change, as the only related factors are (1) the size of
+the hash table utilized and (2) the number of unique entries in the input file.
+
+---
+When you run your program on the same input file with one run using
+stringHash1() and the other run using stringHash2(), is it possible for your
+emptyBuckets() function to return different values?
+
+Yes! Different hash functions assign input keys to different buckets, so
+it is completely possible for two hash functions result in different numbers of
+empty buckets, even on the same table size with the same input values.
+
+---
+Is there any difference in the number of 'empty buckets' when you change the
+table size from an even number, like 1000 to a prime like 997 ?
+
+Yes, because the table size is used in the modulo operator based on the hash. Using
+a prime number decreases the probability of a collision by eliminating the
+possibility of common factors of the modulo operator resulting in assignment
+to the same bucket.
+
+Thus, using a prime number should, in general, decrease the number of empty
+buckets, especially when common factors such as 2, 3 are likely in the hash
+results.
+
+---
+Using the timing code provided to you. Run you code on different size hash
+tables. How does affecting the hash table size change your performance?
+
+As expected, a quick test shows that decreasing the number of buckets
+directly correlates to decreased performance of the hashMap, by a significant
+margin. Decreasing the number of buckets by 100 in one case resulted in
+36 times longer total runtime. This is expected because having fewer
+elements in each bucket means searching for a key is closer to constant time
+than linear time.
+
